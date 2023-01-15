@@ -1,7 +1,7 @@
 
 By Blake Felt - blake.w.felt@gmail.com
 
-ESP32 ADS1115
+ESP8266 ADS1115
 =============
 
 A component for TI ADS1115 on ESP-IDF. For an example, see https://github.com/Molorius/ESP32-Examples.

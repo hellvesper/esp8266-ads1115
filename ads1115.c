@@ -1,9 +1,9 @@
 
-#include "ads1115.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
 #include "esp_log.h"
+#include "ads1115.h"
 
 static void IRAM_ATTR gpio_isr_handler(void* arg) {
   const bool ret = 1; // dummy value to pass to queue
@@ -55,8 +55,8 @@ static esp_err_t ads1115_read_register(ads1115_t* ads, ads1115_register_addresse
 }
 
 ads1115_t ads1115_config(i2c_port_t i2c_port, uint8_t address) {
-  ads1115_t ads; // setup configuration with default values
-  ads.config.bit.OS = 1; // always start conversion
+  ads1115_t ads;                            // setup configuration with default values
+  ads.config.bit.OS = 1;                    // always start conversion
   ads.config.bit.MUX = ADS1115_MUX_0_GND;
   ads.config.bit.PGA = ADS1115_FSR_4_096;
   ads.config.bit.MODE = ADS1115_MODE_SINGLE;
@@ -66,13 +66,13 @@ ads1115_t ads1115_config(i2c_port_t i2c_port, uint8_t address) {
   ads.config.bit.COMP_LAT = 0;
   ads.config.bit.COMP_QUE = 0b11;
 
-  ads.i2c_port = i2c_port; // save i2c port
-  ads.address = address; // save i2c address
-  ads.rdy_pin.in_use = 0; // state that rdy_pin not used
+  ads.i2c_port = i2c_port;                  // save i2c port
+  ads.address = address;                    // save i2c address
+  ads.rdy_pin.in_use = 0;                   // state that rdy_pin not used
   ads.last_reg = ADS1115_MAX_REGISTER_ADDR; // say that we accessed invalid register last
-  ads.changed = 1; // say we changed the configuration
+  ads.changed = 1;                          // say we changed the configuration
   ads.max_ticks = 10/portTICK_PERIOD_MS;
-  return ads; // return the completed configuration
+  return ads;                               // return the completed configuration
 }
 
 void ads1115_set_mux(ads1115_t* ads, ads1115_mux_t mux) {
@@ -85,7 +85,7 @@ void ads1115_set_rdy_pin(ads1115_t* ads, gpio_num_t gpio) {
   gpio_config_t io_conf;
   esp_err_t err;
 
-  io_conf.intr_type = GPIO_PIN_INTR_NEGEDGE; // positive to negative (pulled down)
+  io_conf.intr_type = GPIO_INTR_NEGEDGE; // positive to negative (pulled down)
   io_conf.pin_bit_mask = 1<<gpio;
   io_conf.mode = GPIO_MODE_INPUT;
   io_conf.pull_up_en = 1;
@@ -175,4 +175,13 @@ double ads1115_get_voltage(ads1115_t* ads) {
 
   raw = ads1115_get_raw(ads);
   return (double)raw * fsr[ads->config.bit.PGA] / (double)bits;
+}
+
+double ads1115_raw_to_voltage(ads1115_t* ads, int16_t raw) {
+    const double fsr[] = {6.144, 4.096, 2.048, 1.024, 0.512, 0.256};
+    const int16_t bits = (1L<<15)-1;
+//    int16_t raw;
+
+//    raw = ads1115_get_raw(ads);
+    return (double)raw * fsr[ads->config.bit.PGA] / (double)bits;
 }

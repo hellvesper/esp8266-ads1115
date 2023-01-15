@@ -1,10 +1,10 @@
 
-By Blake Felt - blake.w.felt@gmail.com
+Originally By Blake Felt - blake.w.felt@gmail.com
 
 ESP8266 ADS1115
 =============
 
-A component for TI ADS1115 on ESP-IDF. For an example, see https://github.com/Molorius/ESP32-Examples.
+A component for TI ADS1115 on ESP-IDF. For an example, see https://github.com/hellvesper/esp8266-idf-acid-bms ads1115 branch.
 
 To add to a project, type:
 `git submodule add https://github.com/Molorius/esp32-ads1115.git components/ads1115`

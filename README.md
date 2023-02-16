@@ -1,5 +1,6 @@
 
 Originally By Blake Felt - blake.w.felt@gmail.com
+port (to esp8266) of https://github.com/hellvesper/esp8266-ads1115.git
 
 ESP8266 ADS1115
 =============
@@ -7,7 +8,7 @@ ESP8266 ADS1115
 A component for TI ADS1115 on ESP-IDF. For an example, see https://github.com/hellvesper/esp8266-idf-acid-bms ads1115 branch.
 
 To add to a project, type:
-`git submodule add https://github.com/Molorius/esp32-ads1115.git components/ads1115`
+`git submodule add https://github.com/hellvesper/esp8266-ads1115.git components/ads1115`
 into the base directory of your project.
 
 The datasheet can be found [here](http://www.ti.com/lit/ds/symlink/ads1115.pdf).
